@@ -10,6 +10,8 @@ let EbookRoto = false
 let DiasParaAtras = 3 //Los lunes son 3 hasta el viernes, el resto de los días 1, feriados hay que contar
 let EstadoPBI = 'Todo ok || Nro registro: n' // 'Todo ok' es el bien por defecto 
 
+let Debug = true
+
 //Fechas
 let anio = "2020"
 let mes = "10"
@@ -45,6 +47,7 @@ let backUpalZ =
 process.on('uncaughtException', function (err) {
   console.log('Caught exception: ' + err);});
 
+const { debug } = require('console')
 // Librería FS
 let fs = require('fs')
 const { COPYFILE_EXCL } = fs.constants.COPYFILE_FICLONE_FORCE
@@ -60,7 +63,7 @@ const { COPYFILE_EXCL } = fs.constants.COPYFILE_FICLONE_FORCE
       console.log('Realizado');
     }
 
-    fs.writeFile('/5 - Power BI/5 -- Archivos de Soporte/Estado.txt', EstadoPBI, 'utf8', callback);
+    if(Debug){console.log(EstadoPBI)} else {fs.writeFile('/5 - Power BI/5 -- Archivos de Soporte/Estado.txt', EstadoPBI, 'utf8', callback)};
 
     
 console.log(anio,mes,hoy);
@@ -99,7 +102,7 @@ function Procesamiento(){
       let Origen = Compartido + CarpetaCompartido + dataDiariaConFinde[n].Texto + ' ' + fecha + '.txt';
       let Destino = 'C://' + CarpetaEnC + dataDiariaConFinde[n].Texto + ' ' + fecha + '.txt'         
 
-      fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)
+      if(Debug){console.log(Origen,Destino)} else {fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)}
 
       }
     }
@@ -121,7 +124,7 @@ function Procesamiento(){
       Origen = Compartido + CarpetaCompartido + dataMensual[n].Texto + ' ' + anioMes + '.txt';
       Destino = 'C://' + CarpetaEnC + dataMensual[n].Texto + ' ' + anioMes + '.txt'
 
-      fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)
+      if(Debug){console.log(Origen,Destino)} else {fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)}
 
       }
   }
@@ -136,15 +139,15 @@ function Procesamiento(){
        
 
     di = hoy-DiasParaAtras;
-    fecha = anio+mes+dia;
     dia = di.toString()
     if(dia.length=1){dia = "0"+ dia}
+    fecha = anio+mes+dia;
 
       {
       Origen = Compartido + CarpetaCompartido + dataDiariaSinFinde[n].Texto + ' ' + fecha + '.txt';
       Destino = 'C://' + CarpetaEnC + dataDiariaSinFinde[n].Texto + ' ' + fecha + '.txt'
       
-      fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)
+      if(Debug){console.log(Origen,Destino)} else {fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)}
 
       }
   }
@@ -164,7 +167,7 @@ function Procesamiento(){
       Origen = backUpalZ[n].discoOrigen + backUpalZ[n].completaOrigen + backUpalZ[n].extension;
       Destino = Compartido + backUpalZ[n].DestinoEnCompartido + ' ' + fecha + backUpalZ[n].extension;
     
-      fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)
+      if(Debug){console.log(Origen,Destino)} else {fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)}
 
       }
   }
