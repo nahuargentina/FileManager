@@ -31,7 +31,8 @@ let dataDiariaConFinde =
 
 let dataDiariaSinFinde = [
   {Sistema:'E-book', Posicion: 0, Texto: '1 -- E-Book/E-Book Reestruc y Refinanc'},
-  {Sistema:'Incidentes', Posicion: 1, Texto: '8 -- Incidentes/Incidentes Control Contable'}]
+  {Sistema:'Incidentes', Posicion: 1, Texto: '8 -- Incidentes/Incidentes Control Contable'},
+  {Sistema:'Comex', Posicion: 2, Texto: '9 -- Comex/Informe Comex'}]
 
 let dataMensual =
 [{Sistema:'CRM Intervenciones', Posicion: 0, Texto: '3.1 -- CRM Intervenciones_/Intervenciones de Usuarios CRM'},
