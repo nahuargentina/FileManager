@@ -4,11 +4,13 @@
 // node chrome
 
 //Definificiones
-let CRMRoto = false
-let GestarRoto = false
-let EbookRoto = false
-let DiasParaAtras = 3 //Los lunes son 3 hasta el viernes, el resto de los días 1, feriados hay que contar
-let EstadoPBI = 'Todo ok || Nro registro: n' // 'Todo ok' es el bien por defecto 
+let CRMRoto = false;
+let GestarRoto = false;
+let EbookRoto = false;
+let DiasParaAtras = 1; //Los lunes son 3 hasta el viernes, el resto de los días 1, feriados hay que contar
+let EstadoPBI = 'Todo ok || Nro registro: n'; // 'Todo ok' es el bien por defecto 
+
+let Debaguear = true;
 
 //Fechas
 let anio = "2020"
@@ -27,7 +29,9 @@ let dataDiariaConFinde =
 {Sistema:'Productividad Real', Posicion: 2, Texto: '6 -- Productividad/Fte Real/FTE Real'},
 {Sistema:'Productividad Real por usuario', Posicion:3, Texto: '6 -- Productividad/Productividad por usuario/FTE Real por Usuario'}] 
 
-let dataDiariaSinFinde = [{Sistema:'E-book', Posicion: 0, Texto: '1 -- E-Book/E-Book Reestruc y Refinanc'}]
+let dataDiariaSinFinde = [
+  {Sistema:'E-book', Posicion: 0, Texto: '1 -- E-Book/E-Book Reestruc y Refinanc'},
+  {Sistema:'Incidentes', Posicion: 1, Texto: '8 -- Incidentes/Incidentes Control Contable'}]
 
 let dataMensual =
 [{Sistema:'CRM Intervenciones', Posicion: 0, Texto: '3.1 -- CRM Intervenciones_/Intervenciones de Usuarios CRM'},
@@ -60,10 +64,9 @@ const { COPYFILE_EXCL } = fs.constants.COPYFILE_FICLONE_FORCE
       console.log('Realizado');
     }
 
-    fs.writeFile('/5 - Power BI/5 -- Archivos de Soporte/Estado.txt', EstadoPBI, 'utf8', callback);
+    if(Debaguear){console.log(EstadoPBI)} else {fs.writeFile('/5 - Power BI/5 -- Archivos de Soporte/Estado.txt', EstadoPBI, 'utf8', callback)};
 
-    
-console.log(anio,mes,hoy);
+
 
 // A Procesar
 function Procesamiento(){
@@ -82,10 +85,6 @@ function Procesamiento(){
   fecha = anio + mes + dia;
   acumula -=1 
 
-    console.log(fecha);
-    console.log(dia);
-    console.log(mes);
-
     // Arma el texto y da la orden de copiado
     for (let n=0; n<=(dataDiariaConFinde.length-1); n+=1) 
     {    
@@ -99,14 +98,10 @@ function Procesamiento(){
       let Origen = Compartido + CarpetaCompartido + dataDiariaConFinde[n].Texto + ' ' + fecha + '.txt';
       let Destino = 'C://' + CarpetaEnC + dataDiariaConFinde[n].Texto + ' ' + fecha + '.txt'         
 
-      fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)
+      if(Debuguear){console.log(Origen,Destino)} else {fs.copyFile("\n" + Origen, "\n" + Destino, COPYFILE_EXCL,callback)}
 
       }
-    }
-        
-
-    
-
+    } 
   }
 
   //Sistemas mensuales de informes diarios
@@ -121,7 +116,7 @@ function Procesamiento(){
       Origen = Compartido + CarpetaCompartido + dataMensual[n].Texto + ' ' + anioMes + '.txt';
       Destino = 'C://' + CarpetaEnC + dataMensual[n].Texto + ' ' + anioMes + '.txt'
 
-      fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)
+      if(Debuguear){console.log(Origen,Destino)} else {fs.copyFile("\n" + Origen, "\n" + Destino, COPYFILE_EXCL,callback)}
 
       }
   }
@@ -131,20 +126,18 @@ function Procesamiento(){
   {      
     //Si se rompe E-Book que no se vaya a buscar
     if (dataDiariaSinFinde[n].Sistema =='E-book' && EbookRoto == true){}               
-    
-
-       
-
+          
+    //Procesamiento
     di = hoy-DiasParaAtras;
-    fecha = anio+mes+dia;
-    dia = di.toString()
+    dia = di.toString() //Para que sea string en todos los casos
     if(dia.length=1){dia = "0"+ dia}
+    fecha = anio+mes+dia;
 
       {
       Origen = Compartido + CarpetaCompartido + dataDiariaSinFinde[n].Texto + ' ' + fecha + '.txt';
       Destino = 'C://' + CarpetaEnC + dataDiariaSinFinde[n].Texto + ' ' + fecha + '.txt'
       
-      fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)
+      if(Debuguear){console.log(Origen,Destino)} else {fs.copyFile("\n" + Origen, "\n" + Destino, COPYFILE_EXCL,callback)}
 
       }
   }
@@ -164,7 +157,7 @@ function Procesamiento(){
       Origen = backUpalZ[n].discoOrigen + backUpalZ[n].completaOrigen + backUpalZ[n].extension;
       Destino = Compartido + backUpalZ[n].DestinoEnCompartido + ' ' + fecha + backUpalZ[n].extension;
     
-      fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)
+      if(Debuguear){console.log(Origen,Destino)} else {fs.copyFile("\n" + Origen, "\n" + Destino, COPYFILE_EXCL,callback)}
 
       }
   }
