@@ -1,7 +1,6 @@
 
 // cd "C://5 - Power BI"
 // node dashboard
-// node chrome
 
 //Definificiones
 let CRMRoto = false;
