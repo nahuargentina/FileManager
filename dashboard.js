@@ -10,7 +10,7 @@ let EbookRoto = false;
 let DiasParaAtras = 1; //Los lunes son 3 hasta el viernes, el resto de los días 1, feriados hay que contar
 let EstadoPBI = 'Todo ok || Nro registro: n'; // 'Todo ok' es el bien por defecto 
 
-let Debaguear = true;
+let Debuguear = true;
 
 //Fechas
 let anio = "2020"
@@ -64,7 +64,7 @@ const { COPYFILE_EXCL } = fs.constants.COPYFILE_FICLONE_FORCE
       console.log('Realizado');
     }
 
-    if(Debaguear){console.log(EstadoPBI)} else {fs.writeFile('/5 - Power BI/5 -- Archivos de Soporte/Estado.txt', EstadoPBI, 'utf8', callback)};
+    if(Debuguear){console.log(EstadoPBI)} else {fs.writeFile('/5 - Power BI/5 -- Archivos de Soporte/Estado.txt', EstadoPBI, 'utf8', callback)};
 
 
 
@@ -98,7 +98,7 @@ function Procesamiento(){
       let Origen = Compartido + CarpetaCompartido + dataDiariaConFinde[n].Texto + ' ' + fecha + '.txt';
       let Destino = 'C://' + CarpetaEnC + dataDiariaConFinde[n].Texto + ' ' + fecha + '.txt'         
 
-      if(Debuguear){console.log(Origen,Destino)} else {fs.copyFile("\n" + Origen, "\n" + Destino, COPYFILE_EXCL,callback)}
+      if(Debuguear){console.log("\n" + Origen, "\n" + Destino)} else {fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)}
 
       }
     } 
@@ -116,7 +116,7 @@ function Procesamiento(){
       Origen = Compartido + CarpetaCompartido + dataMensual[n].Texto + ' ' + anioMes + '.txt';
       Destino = 'C://' + CarpetaEnC + dataMensual[n].Texto + ' ' + anioMes + '.txt'
 
-      if(Debuguear){console.log(Origen,Destino)} else {fs.copyFile("\n" + Origen, "\n" + Destino, COPYFILE_EXCL,callback)}
+      if(Debuguear){console.log("\n" + Origen, "\n" + Destino)} else {fs.copyFile(Origen,Destino, COPYFILE_EXCL,callback)}
 
       }
   }
@@ -137,7 +137,7 @@ function Procesamiento(){
       Origen = Compartido + CarpetaCompartido + dataDiariaSinFinde[n].Texto + ' ' + fecha + '.txt';
       Destino = 'C://' + CarpetaEnC + dataDiariaSinFinde[n].Texto + ' ' + fecha + '.txt'
       
-      if(Debuguear){console.log(Origen,Destino)} else {fs.copyFile("\n" + Origen, "\n" + Destino, COPYFILE_EXCL,callback)}
+      if(Debuguear){console.log("\n" + Origen, "\n" + Destino)} else {fs.copyFile(Origen,Destino, COPYFILE_EXCL,callback)}
 
       }
   }
@@ -157,7 +157,7 @@ function Procesamiento(){
       Origen = backUpalZ[n].discoOrigen + backUpalZ[n].completaOrigen + backUpalZ[n].extension;
       Destino = Compartido + backUpalZ[n].DestinoEnCompartido + ' ' + fecha + backUpalZ[n].extension;
     
-      if(Debuguear){console.log(Origen,Destino)} else {fs.copyFile("\n" + Origen, "\n" + Destino, COPYFILE_EXCL,callback)}
+      if(Debuguear){console.log("\n" + Origen, "\n" + Destino)} else {fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)}
 
       }
   }
