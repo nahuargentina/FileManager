@@ -4,13 +4,13 @@
 // node chrome
 
 //Definificiones
-let CRMRoto = false
-let GestarRoto = false
-let EbookRoto = false
-let DiasParaAtras = 3 //Los lunes son 3 hasta el viernes, el resto de los días 1, feriados hay que contar
-let EstadoPBI = 'Todo ok || Nro registro: n' // 'Todo ok' es el bien por defecto 
+let CRMRoto = false;
+let GestarRoto = false;
+let EbookRoto = false;
+let DiasParaAtras = 1; //Los lunes son 3 hasta el viernes, el resto de los días 1, feriados hay que contar
+let EstadoPBI = 'Todo ok || Nro registro: n'; // 'Todo ok' es el bien por defecto 
 
-let Debaguear = true
+let Debaguear = true;
 
 //Fechas
 let anio = "2020"
@@ -50,6 +50,7 @@ process.on('uncaughtException', function (err) {
   console.log('Caught exception: ' + err);});
 
 const { Debaguear } = require('console')
+
 // Librería FS
 let fs = require('fs')
 const { COPYFILE_EXCL } = fs.constants.COPYFILE_FICLONE_FORCE
