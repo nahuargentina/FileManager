@@ -234,7 +234,7 @@ function Backupear(){
         Destino = Compartido + backUpalZ[n].DestinoEnCompartido + ' ' + fechaAhora + ' at ' + hora + '.' + minutos + backUpalZ[n].extension;
         }
 
-        fs.writeFile(Origen, Destino, 'utf8', callback);
+        fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback);
 
 
     }
