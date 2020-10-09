@@ -225,13 +225,17 @@ function Backupear(){
 
 
       let m = new Date()
-      let hora = m.getHours()
-      let minutos = m.getMinutes()
+      let hour = m.getHours()
+      let laHora = hour.toString()
+
+      let minutes = m.getMinutes()
+      let losMinutos = minutes.toString()
+
 
       fechaAhora = Anio+mes+dia;
         {
         Origen = backUpalZ[n].discoOrigen + backUpalZ[n].completaOrigen + backUpalZ[n].extension;
-        Destino = Compartido + backUpalZ[n].DestinoEnCompartido + ' ' + fechaAhora + ' at ' + hora + '.' + minutos + backUpalZ[n].extension;
+        Destino = Compartido + backUpalZ[n].DestinoEnCompartido + ' ' + fechaAhora + ' at ' + laHora + '.' + losMinutos + backUpalZ[n].extension;
         }
 
         fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback);
@@ -249,5 +253,6 @@ function Backupear(){
 exports.Principal = Principal
 exports.Backupear = Backupear
 
-// Ejecución
-Backupear()
+//Backupear()
+// Principal()
+
