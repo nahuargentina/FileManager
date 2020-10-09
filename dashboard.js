@@ -1,21 +1,25 @@
 
 // cd "C://5 - Power BI"
 // node dashboard
- function Principal(){
+ function Principal(DiasParaAtras){
 
   //Definificiones
   let CRMRoto = false;
   let GestarRoto = false;
   let EbookRoto = false;
-  let DiasParaAtras = 1; //Los lunes son 3 hasta el viernes, el resto de los días 1, feriados hay que contar
+  DiasParaAtras = parseInt(DiasParaAtras,10)
+
+  console.log(DiasParaAtras);
+
+  //let DiasParaAtras = 1; //Los lunes son 3 hasta el viernes, el resto de los días 1, feriados hay que contar
   let EstadoPBI = 'Todo ok || Nro registro: n'; // 'Todo ok' es el bien por defecto 
 
-  let Debuguear = true;
+  let Debuguear = false;
 
   //Fechas
   let anio = "2020"
   let mes = "10"
-  let hoy = "05"
+  let hoy = "09"
 
   //Discos
   let Compartido = 'Z:'
@@ -24,7 +28,7 @@
   let DiscoCC = 'Y://INCIDENTES/' //Control Contable
 
   let dataDiariaConFinde = 
-  [{Sistema:'Gestar', Posicion: 0, Texto: '2 -- Gestar_/Informe Gestar para PowerBI'},
+  [{Sistema:'Gestar', Posicion: 0, Texto: '/2 -- Gestar_/Informe Gestar para PowerBI'},
   {Sistema:'CRM', Posicion: 1, Texto: '3 -- CRM_/Informe Detallado CRM'},
   {Sistema:'Productividad Real', Posicion: 2, Texto: '6 -- Productividad/Fte Real/FTE Real'},
   {Sistema:'Productividad Real por usuario', Posicion:3, Texto: '6 -- Productividad/Productividad por usuario/FTE Real por Usuario'}] 
@@ -64,8 +68,7 @@
     function callback(err) {if (err) throw err;
         console.log('Realizado');
       }
-
-      if(Debuguear){console.log(EstadoPBI)} else {fs.writeFile('/5 - Power BI/5 -- Archivos de Soporte/Estado.txt', EstadoPBI, 'utf8', callback)};
+    if(Debuguear){console.log(EstadoPBI)} else {fs.writeFile('/5 - Power BI/5 -- Archivos de Soporte/Estado.txt', EstadoPBI, 'utf8', callback)};
 
 
 
@@ -167,6 +170,8 @@
 
   Procesamiento()
 
+
 }
 
-Principal()
+exports.Principal = Principal
+
