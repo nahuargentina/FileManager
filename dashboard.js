@@ -176,7 +176,7 @@
 
 
 // Backupear archivos principales
-function Backupear(DiasParaAtras){
+function Backupear(){
 
   let date = new Date()
 
@@ -188,14 +188,10 @@ function Backupear(DiasParaAtras){
 
   //Discos
   let Compartido = 'Z:'
-  let CarpetaCompartido = '//2 - MIS/5 - Power BI/'
-  let CarpetaEnC = '5 - Power BI/'
 
 
   let backUpalZ =
-  [{Sistema:'PBIX', discoOrigen: 'C', completaOrigen: '://5 - Power BI/Dashboard Operaciones', extension: '.pbix', DestinoEnCompartido:'//2 - MIS/6 - BUBU/PBI/Dashboard Operaciones'},
-  {Sistema:'BaseIncidentes', discoOrigen: DiscoCC, completaOrigen: 'Registro de Incidentes_be', extension: '.accdb', DestinoEnCompartido:'//2 - MIS/6 - BUBU/Base de Incidentes/Base de Incidentes'}]
-
+  [{Sistema:'PBIX', discoOrigen: 'C', completaOrigen: '://5 - Power BI/Dashboard Operaciones', extension: '.pbix', DestinoEnCompartido:'//2 - MIS/6 - BUBU/PBI/Dashboard Operaciones'}]
 
 
   //"On Error Resume Next"
@@ -207,36 +203,43 @@ function Backupear(DiasParaAtras){
   const { COPYFILE_EXCL } = fs.constants.COPYFILE_FICLONE_FORCE
     //Fs. Copia y pega archivos
 
-
       function callback(err) {if (err) throw err;
         console.log('Copiado');
       }
 
-    //Fs. Sobrescribe en un txt el estado del PBI.
-    function callback(err) {if (err) throw err;
-        console.log('Realizado');
-      }
-    if(Debuguear){console.log(EstadoPBI)} else {fs.writeFile('/5 - Power BI/5 -- Archivos de Soporte/Estado.txt', EstadoPBI, 'utf8', callback)};
-
-
     //Archivos para Backupear  
     for (let n=0; n<=(backUpalZ.length-1); n+=1) 
     {              
-      di = hoy;
-      dia = di.toString()
-      if(dia.length=1){dia = "0"+ dia}
-      
-      
-      fecha = anio+mes+dia;
+      di = day;
+      let dia = di.toString()
+      if(dia.length==1){dia = "0"+ dia}
 
+      let elMes = month;
+      let mes = elMes.toString()
+
+      if(mes.length==1){dia = "0"+ dia}
+
+      let elAnio = year;
+      let Anio = elAnio.toString()
+
+
+
+      let m = new Date()
+      let hora = m.getHours()
+      let minutos = m.getMinutes()
+
+      fechaAhora = Anio+mes+dia;
         {
         Origen = backUpalZ[n].discoOrigen + backUpalZ[n].completaOrigen + backUpalZ[n].extension;
-        Destino = Compartido + backUpalZ[n].DestinoEnCompartido + ' ' + fecha + backUpalZ[n].extension;
-      
-        if(Debuguear){console.log("\n" + Origen, "\n" + Destino)} else {fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)}
-
+        Destino = Compartido + backUpalZ[n].DestinoEnCompartido + ' ' + fechaAhora + ' at ' + hora + '.' + minutos + backUpalZ[n].extension;
         }
+
+        fs.writeFile(Origen, Destino, 'utf8', callback);
+
+
     }
+
+
 
   }
 
@@ -245,3 +248,5 @@ function Backupear(DiasParaAtras){
 
 exports.Principal = Principal
 exports.Backupear = Backupear
+
+Backupear()
