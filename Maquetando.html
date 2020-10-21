@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='styles.css'>
+    <title>Maquetando</title>
+</head>
+<body>
+
+    <div class="configurarDiv">
+        <p>Días para atras:</p>
+        
+
+    <form action="http://localhost:8000/Procesar/" method="POST">
+        <input type="text" id="QDias" name="diasParaAtras">
+        <button type="submit">Procesar</button>
+
+    </form>
+
+
+
+
+    <script>
+    
+        function mensaje()
+        {
+        var num = document.getElementById("diasParaAtras").value
+        
+        if(num.length == 0){alert('Ingresar dias para atras'); return;}
+        else {
+            let constructor = 'http://localhost:8000/comando/' + num
+            window.open(constructor,'_blank')}
+
+        }
+    
+    </script>
+
+
+    </div>
+        
+
+
+
+    
+</body>
+</html>

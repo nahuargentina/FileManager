@@ -1,14 +1,23 @@
 var dashboard = require('./dashboard.js');
  
 const express = require('express')
+const bodyParser = require('body-parser');
 const app = express()
-const fs = require("fs")
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
-app.get('/', function (req, res) {
-  res.send('Principal ejecutado')
-  res.send(dashboard.Principal())
-})
+
+app.post('/Procesar/', function (req, res) {
+    
+    let recibeFormu = req.body
+    //console.log(dias);
+    dashboard.Principal(recibeFormu.diasParaAtras);
+    
+  })
+  
+
+  //res.send(dashboard.Backupear())
+  
 
 
-app.listen(3000)
+app.listen(8000)

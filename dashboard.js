@@ -13,7 +13,7 @@
 
     let EstadoPBI = 'Todo ok || Nro registro: n'; // 'Todo ok' es el bien por defecto 
 
-  let Debuguear = false;
+  let Debuguear = true;
 
   //Fechas
  
