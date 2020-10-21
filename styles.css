@@ -1,15 +1,14 @@
 
 p{  font-family: Arial, Helvetica, sans-serif;
-	font-size: 15px;}
+	font-size: 15px;margin: 10px;}
 
-button{margin-top: 5%;color: red;background-color: transparent ; border-style: none; width: 80px; height: 25px;}
+button{margin-top: 5%;color: red;background-color: transparent ; border-style: none; width: 180px; height: 25px;margin: 10px;}
 button:hover{color: teal; background-color: #fafafa;border-style: solid; border-radius: 5px;}
 
-.configurarDiv{	position: absolute;
-	height: 150px;
-	width: 200px;
-	left: 50%;
-	top: 50%;
-	margin-top: -100px;
-    margin-left: -150px;
+#procesate{width: 80px;}
+
+hr{width: 200px;}
+
+.configurarDiv{	justify-content: center;margin-top: 10%;
+
     text-align: center;} 

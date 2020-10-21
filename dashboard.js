@@ -279,9 +279,86 @@ function Backupear(){
 
 
 
+// Backupear archivos principales
+function BackupearLocal(){
+
+  let date = new Date()
+
+  let day = date.getDate()
+  let month = date.getMonth() + 1
+  let year = date.getFullYear()
+
+
+
+  //Discos
+  let Local = 'C:'
+
+
+  let backUpalLocal =
+  [{Sistema:'PBIX', discoOrigen: 'C', completaOrigen: '://5 - Power BI/Dashboard Operaciones', extension: '.pbix', DestinoEnLocal:'//5 - Power BI/BUBU/Dashboard Operaciones'}]
+
+
+  //"On Error Resume Next"
+  process.on('uncaughtException', function (err) {
+    console.log('Caught exception: ' + err);});
+
+  // Librería FS
+  let fs = require('fs')
+  const { COPYFILE_EXCL } = fs.constants.COPYFILE_FICLONE_FORCE
+    //Fs. Copia y pega archivos
+
+      function callback(err) {if (err) throw err;
+        console.log('Copiado');
+      }
+
+    //Archivos para Backupear  
+    for (let n=0; n<=(backUpalLocal.length-1); n+=1) 
+    {              
+      di = day;
+      let dia = di.toString()
+      if(dia.length==1){dia = "0"+ dia}
+
+      let elMes = month;
+      let mes = elMes.toString()
+
+      if(mes.length==1){dia = "0"+ dia}
+
+      let elAnio = year;
+      let Anio = elAnio.toString()
+
+
+
+      let m = new Date()
+      let hour = m.getHours()
+      let laHora = hour.toString()
+
+      let minutes = m.getMinutes()
+      let losMinutos = minutes.toString()
+
+
+      fechaAhora = Anio+mes+dia;
+        {
+        Origen = backUpalLocal[n].discoOrigen + backUpalLocal[n].completaOrigen + backUpalLocal[n].extension;
+        Destino = Local + backUpalLocal[n].DestinoEnLocal + ' ' + fechaAhora + ' at ' + laHora + '.' + losMinutos + backUpalLocal[n].extension;
+        }
+
+        console.log(Origen);
+        console.log(Destino);
+        fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback);
+
+
+    }
+
+
+
+  }
+
+
 
 exports.Principal = Principal
 exports.Backupear = Backupear
+exports.BackupearLocal = BackupearLocal
+
 
 //Backupear()
 // Principal()

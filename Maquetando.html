@@ -13,28 +13,23 @@
         
 
     <form action="http://localhost:8000/Procesar/" method="POST">
-        <input type="text" id="QDias" name="diasParaAtras">
-        <button type="submit">Procesar</button>
+        <input type="text" id="QDias" name="diasParaAtras"> <p>
+        <button id ='procesate' type="submit">Procesar</button>
+
+    </form>
+    <p>
+    
+    <p></p>
+   
+    <form action="http://localhost:8000/Backupear/" method="POST">
+          <button type="submit">Backupear al compartido</button>
 
     </form>
 
+    <form action="http://localhost:8000/BackupearLocal/" method="POST">
+        <button type="submit">Backupear en Disco Local</button>
 
-
-
-    <script>
-    
-        function mensaje()
-        {
-        var num = document.getElementById("diasParaAtras").value
-        
-        if(num.length == 0){alert('Ingresar dias para atras'); return;}
-        else {
-            let constructor = 'http://localhost:8000/comando/' + num
-            window.open(constructor,'_blank')}
-
-        }
-    
-    </script>
+  </form>
 
 
     </div>
