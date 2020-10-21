@@ -9,34 +9,28 @@
   let EbookRoto = false;
   DiasParaAtras = parseInt(DiasParaAtras,10)
 
-  console.log(DiasParaAtras);
+  console.log('Días hacia atras: ' + DiasParaAtras);
 
-  //let DiasParaAtras = 1; //Los lunes son 3 hasta el viernes, el resto de los días 1, feriados hay que contar
-  let EstadoPBI = 'Todo ok || Nro registro: n'; // 'Todo ok' es el bien por defecto 
+    let EstadoPBI = 'Todo ok || Nro registro: n'; // 'Todo ok' es el bien por defecto 
 
   let Debuguear = false;
 
   //Fechas
-  let anio = "2020"
-  let mes = "10"
-  let hoy = "09"
-
+ 
   //Discos
   let Compartido = 'Z:'
   let CarpetaCompartido = '//2 - MIS/5 - Power BI/'
   let CarpetaEnC = '5 - Power BI/'
   let DiscoCC = 'Y://INCIDENTES/' //Control Contable
 
-  let dataDiariaConFinde = 
-  [{Sistema:'Gestar', Posicion: 0, Texto: '/2 -- Gestar_/Informe Gestar para PowerBI'},
-  {Sistema:'CRM', Posicion: 1, Texto: '3 -- CRM_/Informe Detallado CRM'},
-  {Sistema:'Productividad Real', Posicion: 2, Texto: '6 -- Productividad/Fte Real/FTE Real'},
-  {Sistema:'Productividad Real por usuario', Posicion:3, Texto: '6 -- Productividad/Productividad por usuario/FTE Real por Usuario'}] 
-
-  let dataDiariaSinFinde = [
-    {Sistema:'E-book', Posicion: 0, Texto: '1 -- E-Book/E-Book Reestruc y Refinanc'},
-    {Sistema:'Incidentes', Posicion: 1, Texto: '8 -- Incidentes/Incidentes Control Contable'},
-    {Sistema:'Comex', Posicion: 2, Texto: '9 -- Comex/Informe Comex'}]
+  let dataDiaria = 
+  [{Sistema:'Gestar',Texto: '/2 -- Gestar_/Informe Gestar para PowerBI'},
+  {Sistema:'CRM', Texto: '3 -- CRM_/Informe Detallado CRM'},
+  {Sistema:'Productividad Real', Texto: '6 -- Productividad/Fte Real/FTE Real'},
+  {Sistema:'Productividad Real por usuario', Texto: '6 -- Productividad/Productividad por usuario/FTE Real por Usuario'},
+  {Sistema:'E-book', Texto: '1 -- E-Book/E-Book Reestruc y Refinanc'},
+  {Sistema:'Incidentes', Texto: '8 -- Incidentes/Incidentes Control Contable'},
+  {Sistema:'Comex', Texto: '9 -- Comex/Informe Comex'}]
 
   let dataMensual =
   [{Sistema:'CRM Intervenciones', Posicion: 0, Texto: '3.1 -- CRM Intervenciones_/Intervenciones de Usuarios CRM'},
@@ -76,33 +70,88 @@
   function Procesamiento(){
       
     //Sistemas diarios con datos de fin de semana
-    
-    let dia;
-    let fecha;  
-    acumula = DiasParaAtras; 
+   
+    let anio
+    let mes
+    let dia
+    let di
+    let me
+    let acumula = 0
+
     
     for (let i = 1; i<=DiasParaAtras;i+=1)
     {
-    let di = hoy - acumula;
-    dia = di.toString()
-    if(dia.length=1){dia = "0"+ dia}
-    fecha = anio + mes + dia;
-    acumula -=1 
+    
+      let fechajs = new Date
+      let fecha = new Date(fechajs.getTime() - 24*60*60*1000* (DiasParaAtras-acumula))   
+
+      anio = fecha.getFullYear()
+      me = fecha.getMonth()+1
+      di = fecha.getDate()
+      let numerodiasemana = fecha.getDay()
+      let diasemana
+      
+      dia = di.toString()
+      if(dia.length==1){dia = "0"+ dia}
+      
+      mes = me.toString()
+      if(mes.length==1){mes = "0"+ mes}
+      
+      acumula = acumula + 1
+
+      fecha = anio + mes + dia;
+      
+      switch (numerodiasemana) {
+        case 0:
+        diasemana ='Domingo';
+          break;
+      
+        case 1:
+        diasemana ='Lunes';
+        break;
+        
+        case 2:
+        diasemana ='Martes';
+        break;
+        
+        case 3:
+        diasemana ='Miércoles';
+        break;
+        
+        case 4:
+        diasemana ='Jueves';
+        break;
+
+        case 5:
+        diasemana ='Viernes';
+        break;
+
+        case 6:
+        diasemana ='Sábado';
+        break;
+
+      
+        default:
+          break;
+      }
+
+      
 
       // Arma el texto y da la orden de copiado
-      for (let n=0; n<=(dataDiariaConFinde.length-1); n+=1) 
+      for (let n=0; n<=(dataDiaria.length-1); n+=1) 
       {    
       //Si se rompe algun sistema que no se vaya a buscar
-      if (dataDiariaConFinde[n].Sistema =='Gestar' && GestarRoto == true){}
-      else if (dataDiariaConFinde[n].Sistema =='CRM' && CRMRoto == true){}
-      else if (dataDiariaConFinde[n].Sistema =='Productividad Real' && (GestarRoto == true||CRMRoto == true||EbookRoto == true)){}
-      else if (dataDiariaConFinde[n].Sistema =='Productividad Real por usuario' && (GestarRoto == true||CRMRoto == true||EbookRoto == true)){}
+      if (dataDiaria[n].Sistema =='Gestar' && GestarRoto == true){}
+      else if (dataDiaria[n].Sistema =='CRM' && CRMRoto == true){}
+      else if (dataDiaria[n].Sistema =='E-book' && EbookRoto == true){}
+      else if (dataDiaria[n].Sistema =='Productividad Real' && (GestarRoto == true||CRMRoto == true||EbookRoto == true)){}
+      else if (dataDiaria[n].Sistema =='Productividad Real por usuario' && (GestarRoto == true||CRMRoto == true||EbookRoto == true)){}
       else
         {
-        let Origen = Compartido + CarpetaCompartido + dataDiariaConFinde[n].Texto + ' ' + fecha + '.txt';
-        let Destino = 'C://' + CarpetaEnC + dataDiariaConFinde[n].Texto + ' ' + fecha + '.txt'         
+        let Origen = Compartido + CarpetaCompartido + dataDiaria[n].Texto + ' ' + fecha + '.txt';
+        let Destino = 'C://' + CarpetaEnC + dataDiaria[n].Texto + ' ' + fecha + '.txt'         
 
-        if(Debuguear){console.log("\n" + Origen, "\n" + Destino)} else {fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)}
+        if(Debuguear){console.log("\n" + Origen, "\n" + Destino, "\n" + dataDiaria[n].Sistema + " " + diasemana)} else {fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback); console.log(dataDiaria[n].Sistema + " " + diasemana);}
 
         }
       } 
@@ -125,34 +174,15 @@
         }
     }
     
-    //Sistema diario sin fines de semana    
-    for (let n=0; n<=(dataDiariaSinFinde.length-1); n+=1) 
-    {      
-      //Si se rompe E-Book que no se vaya a buscar
-      if (dataDiariaSinFinde[n].Sistema =='E-book' && EbookRoto == true){}               
-            
-      //Procesamiento
-      di = hoy-DiasParaAtras;
-      dia = di.toString() //Para que sea string en todos los casos
-      if(dia.length=1){dia = "0"+ dia}
-      fecha = anio+mes+dia;
-
-        {
-        Origen = Compartido + CarpetaCompartido + dataDiariaSinFinde[n].Texto + ' ' + fecha + '.txt';
-        Destino = 'C://' + CarpetaEnC + dataDiariaSinFinde[n].Texto + ' ' + fecha + '.txt'
-        
-        if(Debuguear){console.log("\n" + Origen, "\n" + Destino)} else {fs.copyFile(Origen,Destino, COPYFILE_EXCL,callback)}
-
-        }
-    }
 
 
-    //Archivos para Backupear  
+
+    /*//Archivos para Backupear  
     for (let n=0; n<=(backUpalZ.length-1); n+=1) 
     {              
       di = hoy;
       dia = di.toString()
-      if(dia.length=1){dia = "0"+ dia}
+      if(dia.length==1){dia = "0"+ dia}
       
       
       fecha = anio+mes+dia;
@@ -164,7 +194,7 @@
         if(Debuguear){console.log("\n" + Origen, "\n" + Destino)} else {fs.copyFile(Origen, Destino, COPYFILE_EXCL,callback)}
 
         }
-    }
+    }*/
 
   }
 
